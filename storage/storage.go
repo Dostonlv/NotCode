@@ -2,7 +2,6 @@ package storage
 
 import (
 	"github.com/Dostonlv/NotCode.git/models"
-	gopiston "github.com/milindmadhukar/go-piston"
 )
 
 type StorageI interface {
@@ -10,5 +9,5 @@ type StorageI interface {
 }
 
 type CompilerRepoI interface {
-	Compile(req models.Req) (gopiston.PistonResponse, error)
+	Compile(req models.Req) (string, error)
 }

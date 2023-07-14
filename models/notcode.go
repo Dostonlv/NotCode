@@ -5,4 +5,5 @@ type Req struct {
 	Version  string `json:"version"`
 	Code     string `json:"code"`
 	Cases    string `json:"cases"`
+	Test     string `json:"test"`
 }

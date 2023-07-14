@@ -15,7 +15,7 @@ func main() {
 	// call logger
 	r.Use(gin.Recovery(), gin.Logger())
 	cfg := config.Load()
-	//
+
 	var loggerLevel = new(string)
 	*loggerLevel = logger.LevelDebug
 	switch cfg.Environment {
@@ -49,24 +49,5 @@ func main() {
 		log.Panic("Error listening server: ", logger.Error(err))
 		return
 	}
-
-	//var s = models.Req{
-	//	Version:  "3.10",
-	//	Language: "python",
-	//	Code:     "input()\nprint(inp[::-1])",
-	//	Cases:    "hello world",
-	//}
-	//
-	//d, err := postgres.NewConnectPostgresql(&cfg)
-	//if err != nil {
-	//	logger.Error(err)
-	//}
-	//
-	//b, err := d.Compiler().Compile(s)
-	//if err != nil {
-	//	logger.Error(err)
-	//}
-	//
-	//fmt.Println(b.GetOutput())
 
 }

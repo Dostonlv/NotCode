@@ -5,29 +5,35 @@ import (
 	"github.com/Dostonlv/pkg/logger"
 	_ "github.com/Dostonlv/pkg/logger"
 	gopiston "github.com/milindmadhukar/go-piston"
+	"strings"
 )
 
 type compilerRepo struct {
 	db string
 }
 
-func (c *compilerRepo) Compile(req models.Req) (gopiston.PistonResponse, error) {
+func (c *compilerRepo) Compile(req models.Req) (string, error) {
 	var err error
-	var res gopiston.PistonResponse
-
 	client := gopiston.CreateDefaultClient()
-	output, err := client.Execute(req.Language, req.Version, // Passing language. Since no version is specified, it uses the latest supported version.
+	output, err := client.Execute(req.Language, req.Version,
 		[]gopiston.Code{
 			{Content: req.Code},
 		},
-		gopiston.Stdin(req.Cases), // Passing input as "hello world".
+		gopiston.Stdin(req.Cases),
 	)
+	out := output.GetOutput()
+	out = strings.TrimSuffix(output.GetOutput(), "\n")
 	if err != nil {
 		logger.Any("Error in code execute", err)
-		return res, err
+		return out, err
 	}
-	res = *output
-	return res, nil
+	if out == req.Test {
+		out = "Test passed"
+	} else {
+		out = "Test failed"
+	}
+	return out, nil
+
 }
 
 func NewCompilerRepo(db string) *compilerRepo {
