@@ -9,5 +9,5 @@ type StorageI interface {
 }
 
 type CompilerRepoI interface {
-	Compile(req models.Req) (string, error)
+	Compile(req models.Req, test models.Test) (string, error)
 }
